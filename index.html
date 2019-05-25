@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Stock Tracker</title>
+    <link rel="stylesheet" href="style.css">
+    <script data-main="main.js" src="lib/require.js"></script>
+  </head>
+  <body>
+    <div id="stock-add-form">
+      <h1>Add a Stock</h1>
+      <div class="form-input">
+        <label for="stock-add-form-ticker">Ticker:</label>
+        <input type="text" id="stock-add-form-ticker">
+      </div>
+      <div class="form-input">
+          <label for="stock-add-form-shares">Shares:</label>
+          <input type="number" id="stock-add-form-shares">
+      </div>
+      <div class="form-input">
+          <label for="stock-add-form-price">Buy price:</label>
+          <input type="number" id="stock-add-form-price">
+      </div>
+      <div>
+        <button id="stock-add-form-submit">Add stock</button>
+      </div>
+    </div>
+    <div id="stocks">
+
+    </div>
+  </body>
+</html>
