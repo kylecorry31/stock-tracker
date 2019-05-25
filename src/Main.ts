@@ -9,17 +9,15 @@ import LocalStoragePortfolio = require("./LocalStoragePortfolio");
 let portfolio: Portfolio = new LocalStoragePortfolio();
 let stockMarket: StockMarket = new IEXTradingStockMarket();
 
-function displayStocks(stocks: StockPurchase[], element: HTMLElement){
+async function displayStocks(stocks: StockPurchase[], element: HTMLElement){
     element.innerHTML = '';
     for(let stock of stocks){
-        stockMarket.lookup(stock.getStock())
-            .then(stockDetails => {
-                let stockInfoElt = new StockInfo(stock, stockDetails);
-                stockInfoElt.addEventListener('delete', () => {
-                    removeStock(portfolio, stock, document.querySelector('#stocks'));
-                });
-                element.appendChild(stockInfoElt);
-            });
+        let stockDetails = await stockMarket.lookup(stock.getStock());
+        let stockInfoElt = new StockInfo(stock, stockDetails);
+        stockInfoElt.addEventListener('delete', () => {
+            removeStock(portfolio, stock, document.querySelector('#stocks'));
+        });
+        element.appendChild(stockInfoElt);
     }
 }
 
@@ -34,9 +32,9 @@ function removeStock(portfolio: Portfolio, stock: StockPurchase, element: HTMLEl
 }
 
 document.querySelector('#stock-add-form-submit').addEventListener('click', () => {
-    let tickerElt = (document.querySelector('#stock-add-form-ticker') as HTMLInputElement);
-    let sharesElt = (document.querySelector('#stock-add-form-shares') as HTMLInputElement);
-    let priceElt = (document.querySelector('#stock-add-form-price') as HTMLInputElement);
+    let tickerElt: HTMLInputElement = document.querySelector('#stock-add-form-ticker');
+    let sharesElt: HTMLInputElement = document.querySelector('#stock-add-form-shares');
+    let priceElt: HTMLInputElement = document.querySelector('#stock-add-form-price');
     let ticker = tickerElt.value.toUpperCase();
     let shares = parseFloat(sharesElt.value);
     let price = parseFloat(priceElt.value);

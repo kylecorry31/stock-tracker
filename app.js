@@ -254,17 +254,17 @@ define("Main", ["require", "exports", "Stock", "IEXTradingStockMarket", "StockPu
     let portfolio = new LocalStoragePortfolio();
     let stockMarket = new IEXTradingStockMarket();
     function displayStocks(stocks, element) {
-        element.innerHTML = '';
-        for (let stock of stocks) {
-            stockMarket.lookup(stock.getStock())
-                .then(stockDetails => {
+        return __awaiter(this, void 0, void 0, function* () {
+            element.innerHTML = '';
+            for (let stock of stocks) {
+                let stockDetails = yield stockMarket.lookup(stock.getStock());
                 let stockInfoElt = new StockInfo(stock, stockDetails);
                 stockInfoElt.addEventListener('delete', () => {
                     removeStock(portfolio, stock, document.querySelector('#stocks'));
                 });
                 element.appendChild(stockInfoElt);
-            });
-        }
+            }
+        });
     }
     function addStock(portfolio, stock, element) {
         portfolio.addStock(stock);
